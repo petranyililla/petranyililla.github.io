@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lilla Petrányi — Mathematics</title>
+<meta name="description" content="Lilla Petrányi — BSc Mathematics student at the University of Warwick. Graph theory, competition mathematics, and programming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14181c;
+    --bg-raised: #1b2126;
+    --ink: #ece9dd;
+    --ink-dim: #9aa19f;
+    --ink-faint: #6b716f;
+    --line: rgba(236,233,221,0.14);
+    --line-strong: rgba(236,233,221,0.28);
+    --teal: #4ec3a6;
+    --violet: #8f89e0;
+    --amber: #dcac54;
+    --teal-dim: rgba(78,195,166,0.14);
+    --violet-dim: rgba(143,137,224,0.14);
+    --amber-dim: rgba(220,172,84,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--teal-dim); color:var(--ink); }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; letter-spacing:-0.01em; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 28px; }
+
+  /* nav */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,24,28,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .nav-name{ font-family:'Fraunces', serif; font-size:17px; font-weight:500; }
+  .nav-links{ display:flex; gap:26px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; color:var(--ink-dim); font-size:13.5px;
+    letter-spacing:0.02em; transition:color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--line-strong); color:var(--ink); border-radius:6px; padding:6px 10px; font-size:13px; cursor:pointer; }
+
+  /* hero */
+  .hero{ padding:88px 0 64px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--teal);
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px; display:block;
+  }
+  .hero h1{ font-size:52px; line-height:1.05; margin-bottom:18px; }
+  .hero h1 em{ font-style:italic; color:var(--teal); }
+  .hero p.lede{ font-size:17px; color:var(--ink-dim); max-width:46ch; margin-bottom:28px; }
+  .hero-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:8px; text-decoration:none;
+    font-size:13.5px; font-weight:500; border:1px solid var(--line-strong);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn:hover{ border-color:var(--teal); }
+  .btn.primary{ background:var(--teal); color:#0d1a17; border-color:var(--teal); }
+  .btn.primary:hover{ background:#5ed4b6; }
+
+  /* signature: cluster graph */
+  .graph-wrap{ position:relative; height:320px; }
+  svg#graph{ width:100%; height:100%; }
+  .node-label{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; fill:var(--ink-dim); }
+  .node-dot{ animation:drift 7s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .node-dot.d2{ animation-delay:-1.4s; }
+  .node-dot.d3{ animation-delay:-2.8s; }
+  .node-dot.d4{ animation-delay:-4.2s; }
+  .node-dot.d5{ animation-delay:-5.6s; }
+  @keyframes drift{
+    0%,100%{ transform:translateY(0px); }
+    50%{ transform:translateY(-6px); }
+  }
+  @media (prefers-reduced-motion: reduce){ .node-dot{ animation:none; } }
+
+  /* section scaffolding */
+  section{ padding:64px 0; border-top:1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
+  .section-num{ font-family:'IBM Plex Mono', monospace; color:var(--ink-faint); font-size:13px; }
+  .section-head h2{ font-size:26px; }
+  p{ color:var(--ink-dim); margin:0 0 14px; }
+  .about-body{ max-width:64ch; font-size:16px; }
+  .about-body strong{ color:var(--ink); font-weight:500; }
+
+  /* timeline (education) */
+  .timeline{ display:flex; flex-direction:column; gap:0; }
+  .tl-item{
+    display:grid; grid-template-columns:150px 1fr; gap:24px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .tl-item:last-child{ border-bottom:none; }
+  .tl-date{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--teal); white-space:nowrap; }
+  .tl-title{ font-size:17px; color:var(--ink); font-weight:500; margin-bottom:4px; font-family:'Fraunces', serif; }
+  .tl-place{ font-size:13.5px; color:var(--ink-faint); margin-bottom:8px; }
+  .tl-desc{ font-size:14.5px; color:var(--ink-dim); margin:0; }
+  .tl-tag{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11px;
+    padding:2px 8px; border-radius:5px; margin-top:8px;
+    background:var(--teal-dim); color:var(--teal);
+  }
+
+  /* project cards */
+  .cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  .card{
+    background:var(--bg-raised); border:1px solid var(--line);
+    border-radius:12px; padding:22px 20px; display:flex; flex-direction:column;
+  }
+  .card-tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; margin-bottom:14px; }
+  .card-tag.t1{ color:var(--teal); }
+  .card-tag.t2{ color:var(--violet); }
+  .card-tag.t3{ color:var(--amber); }
+  .card h3{ font-size:17px; margin-bottom:8px; }
+  .card p{ font-size:14px; flex-grow:1; }
+  .card .card-date{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-faint); margin-top:14px; }
+
+  /* achievements — ranked list */
+  .ranklist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
+  .rank-row{
+    display:grid; grid-template-columns:56px 1fr auto; align-items:center;
+    gap:16px; padding:14px 0; border-bottom:1px solid var(--line);
+  }
+  .rank-row:last-child{ border-bottom:none; }
+  .rank-badge{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; text-align:center;
+    padding:5px 0; border-radius:6px; background:var(--amber-dim); color:var(--amber);
+  }
+  .rank-row.gold .rank-badge{ background:var(--teal-dim); color:var(--teal); }
+  .rank-name{ font-size:14.5px; color:var(--ink); }
+  .rank-year{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-faint); }
+
+  /* two-column info (skills/langs) */
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .info-block h3{ font-size:14px; color:var(--ink-dim); font-family:'IBM Plex Mono', monospace; font-weight:400; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px; }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; padding:6px 12px;
+    border:1px solid var(--line-strong); border-radius:20px; color:var(--ink-dim);
+  }
+  .lang-row{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .lang-row:last-child{ border-bottom:none; }
+  .lang-level{ font-family:'IBM Plex Mono', monospace; color:var(--ink-faint); font-size:12.5px; }
+
+  footer{ padding:56px 0 80px; text-align:center; }
+  footer h2{ font-size:28px; margin-bottom:14px; }
+  footer p{ margin-bottom:26px; }
+  .foot-note{ font-size:12px; color:var(--ink-faint); margin-top:50px; }
+
+  @media (max-width:820px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .graph-wrap{ height:220px; order:-1; }
+    .hero h1{ font-size:38px; }
+    .cards{ grid-template-columns:1fr; }
+    .info-grid{ grid-template-columns:1fr; }
+    .nav-links{
+      position:absolute; top:60px; left:0; right:0; background:var(--bg);
+      flex-direction:column; padding:16px 28px; border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-toggle{ display:inline-block; }
+    .tl-item{ grid-template-columns:1fr; gap:6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <span class="nav-name">Lilla Petrányi</span>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#camps">Camps</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">Menu</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">BSc Mathematics · University of Warwick</span>
+      <h1>Mathematics, <em>solved</em><br>one problem at a time.</h1>
+      <p class="lede">I'm a second-year mathematics student at Warwick, with a soft spot for graph theory, competition mathematics, and programming.</p>
+      <div class="hero-links">
+        <a class="btn primary" href="mailto:petranyi.lilla13@gmail.com">Get in touch</a>
+        <a class="btn" href="#projects">See my projects</a>
+      </div>
+    </div>
+    <div class="graph-wrap">
+      <svg id="graph" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a clustered network graph representing mathematics, programming, and competitions">
+        <line x1="120" y1="80" x2="80" y2="150" stroke="#4ec3a6" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="120" y1="80" x2="170" y2="120" stroke="#4ec3a6" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="80" y1="150" x2="170" y2="120" stroke="#4ec3a6" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="250" y1="70" x2="290" y2="130" stroke="#8f89e0" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="250" y1="70" x2="220" y2="130" stroke="#8f89e0" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="290" y1="130" x2="220" y2="130" stroke="#8f89e0" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="150" y1="230" x2="210" y2="260" stroke="#dcac54" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="150" y1="230" x2="110" y2="270" stroke="#dcac54" stroke-opacity="0.35" stroke-width="1.4"/>
+        <line x1="170" y1="120" x2="150" y2="230" stroke="#6b716f" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="220" y1="130" x2="150" y2="230" stroke="#6b716f" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="3 4"/>
+
+        <g class="node-dot"><circle cx="120" cy="80" r="7" fill="#4ec3a6"/></g>
+        <g class="node-dot d2"><circle cx="80" cy="150" r="5" fill="#4ec3a6"/></g>
+        <g class="node-dot d3"><circle cx="170" cy="120" r="9" fill="#4ec3a6"/></g>
+        <text x="132" y="76" class="node-label">mathematics</text>
+
+        <g class="node-dot d2"><circle cx="250" cy="70" r="6" fill="#8f89e0"/></g>
+        <g class="node-dot d4"><circle cx="290" cy="130" r="8" fill="#8f89e0"/></g>
+        <g class="node-dot d5"><circle cx="220" cy="130" r="5" fill="#8f89e0"/></g>
+        <text x="240" y="56" class="node-label">programming</text>
+
+        <g class="node-dot d3"><circle cx="150" cy="230" r="9" fill="#dcac54"/></g>
+        <g class="node-dot d4"><circle cx="210" cy="260" r="6" fill="#dcac54"/></g>
+        <g class="node-dot d5"><circle cx="110" cy="270" r="5" fill="#dcac54"/></g>
+        <text x="120" y="295" class="node-label">competitions</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">01</span><h2>About</h2></div>
+    <p class="about-body">I'm a second-year <strong>BSc Mathematics</strong> student at the <strong>University of Warwick</strong>, with a first-year average of 87% and a First in every module. My interests sit at the intersection of pure mathematics — analysis, algebra — and its computational side: graph theory, algorithms, and machine learning. Before Warwick, I studied at a mathematics-specialised class at Fazekas Mihály Gimnázium in Budapest, and competed nationally and internationally in mathematics and programming olympiads. Outside of academics, I dance, boulder, hike, and read.</p>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">02</span><h2>Education</h2></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025 — 2028</div>
+        <div>
+          <div class="tl-title">University of Warwick</div>
+          <div class="tl-place">BSc Mathematics</div>
+          <p class="tl-desc">First-year average 87% — a First in every module. Coursework: Analysis, Algebra, Mathematical Modelling, Statistics.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2023 — 2025</div>
+        <div>
+          <div class="tl-title">Fazekas Mihály Gimnázium</div>
+          <div class="tl-place">Budapest, Hungary — mathematics-specialised class</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2017 — 2023</div>
+        <div>
+          <div class="tl-title">Bányai Júlia Gimnázium</div>
+          <div class="tl-place">Kecskemét, Hungary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">03</span><h2>Projects</h2></div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-tag t1">coursework</span>
+        <h3>Clustering in networks</h3>
+        <p>A group coursework project for Warwick's Mathematics by Computer module, looking at community detection in networks using Python, graph theory, and linear algebra.</p>
+        <span class="card-date">2026</span>
+      </div>
+      <div class="card">
+        <span class="card-tag t2">machine learning</span>
+        <h3>Car racing with neural networks</h3>
+        <p>Designed and trained a neural network in Python to navigate an unknown track while minimising completion time.</p>
+        <span class="card-date">Aug 2025</span>
+      </div>
+      <div class="card">
+        <span class="card-tag t3">robotics</span>
+        <h3>Medical game</h3>
+        <p>An educational robot game for children built around spatial awareness and coordination. Placed 3rd at the World Robot Olympiad — Future Innovators.</p>
+        <span class="card-date">2022</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">04</span><h2>Honours &amp; awards</h2></div>
+    <ul class="ranklist">
+      <li class="rank-row gold"><span class="rank-badge">1st</span><span class="rank-name">National Junior Olympiad in Mathematics</span><span class="rank-year">2023</span></li>
+      <li class="rank-row gold"><span class="rank-badge">1st</span><span class="rank-name">Dürer Team Competition, Mathematics</span><span class="rank-year">2023</span></li>
+      <li class="rank-row gold"><span class="rank-badge">2nd</span><span class="rank-name">KöMaL Mathematics</span><span class="rank-year">2022</span></li>
+      <li class="rank-row"><span class="rank-badge">5th</span><span class="rank-name">European Girls' Olympiad in Informatics — selection round</span><span class="rank-year">2024</span></li>
+      <li class="rank-row"><span class="rank-badge">12th</span><span class="rank-name">National Olympiad in Mathematics</span><span class="rank-year">2024</span></li>
+      <li class="rank-row"><span class="rank-badge">23rd</span><span class="rank-name">National Olympiad in Programming</span><span class="rank-year">2025</span></li>
+      <li class="rank-row gold"><span class="rank-badge mono">—</span><span class="rank-name">Kardos Scholarship for outstanding mathematical achievement</span><span class="rank-year">2024</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="camps">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">05</span><h2>Camps &amp; conferences</h2></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Aug 2025</div>
+        <div>
+          <div class="tl-title">Jane Street WiSE Programme</div>
+          <div class="tl-place">London</div>
+          <p class="tl-desc">Selected participant in the Women in Science and Engineering programme; explored quantitative trading through probability, logic, and problem-solving.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Feb 2025</div>
+        <div>
+          <div class="tl-title">Farum Mathematics Camp</div>
+          <div class="tl-place">Denmark</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Sep 2024</div>
+        <div>
+          <div class="tl-title">Maths Beyond Limits</div>
+          <div class="tl-place">Poland</div>
+          <p class="tl-desc">Selected participant at this international mathematics camp.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2021 — 2024</div>
+        <div>
+          <div class="tl-title">ProgTábor</div>
+          <div class="tl-place">Budapest</div>
+          <p class="tl-desc">Advanced programming camps covering graph theory, combinatorics, algorithms, and discovery-based problem-solving for selected students.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2020 — 2025</div>
+        <div>
+          <div class="tl-title">Weekend Maths Camps</div>
+          <p class="tl-desc">Regular participation focused on challenging problems, discovery-based learning, and mathematical research.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026 —</div>
+        <div>
+          <div class="tl-title">Mathematics Camp Mentor</div>
+          <p class="tl-desc">Mentoring 13–15-year-old students in mathematical problem-solving and supporting camp activities.</p>
+          <span class="tl-tag">mentoring</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num mono">06</span><h2>Skills &amp; languages</h2></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <h3>Programming</h3>
+        <div class="pill-row">
+          <span class="pill">Python</span>
+          <span class="pill">C++</span>
+          <span class="pill">algorithms</span>
+          <span class="pill">problem-solving</span>
+          <span class="pill">computational thinking</span>
+        </div>
+      </div>
+      <div class="info-block">
+        <h3>Languages</h3>
+        <div class="lang-row"><span>Hungarian</span><span class="lang-level">native</span></div>
+        <div class="lang-row"><span>English</span><span class="lang-level">C2</span></div>
+        <div class="lang-row"><span>Spanish</span><span class="lang-level">A2</span></div>
+        <div class="lang-row"><span>German</span><span class="lang-level">A2</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk mathematics.</h2>
+    <p>Open to internships, collaborations, and interesting problems.</p>
+    <a class="btn primary" href="mailto:petranyi.lilla13@gmail.com">petranyi.lilla13@gmail.com</a>
+    <p class="foot-note">Lilla Petrányi — BSc Mathematics, University of Warwick</p>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+
+</body>
+</html>
