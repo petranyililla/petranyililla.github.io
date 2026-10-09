@@ -48,10 +48,10 @@
     border-bottom:1px solid var(--line);
   }
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
-  .nav-name{ font-family:'Fraunces', serif; font-size:17px; font-weight:500; }
-  .nav-links{ display:flex; gap:26px; list-style:none; margin:0; padding:0; }
+  .nav-name{ font-family:'Fraunces', serif; font-size:17px; font-weight:500; text-decoration:none; }
+  .nav-links{ display:flex; gap:20px; list-style:none; margin:0; padding:0; }
   .nav-links a{
-    text-decoration:none; color:var(--ink-dim); font-size:13.5px;
+    text-decoration:none; color:var(--ink-dim); font-size:13px;
     letter-spacing:0.02em; transition:color .15s ease;
   }
   .nav-links a:hover{ color:var(--ink); }
@@ -94,7 +94,7 @@
   @media (prefers-reduced-motion: reduce){ .node-dot{ animation:none; } }
 
   /* section scaffolding */
-  section{ padding:64px 0; border-top:1px solid var(--line); }
+  section{ padding:64px 0; border-top:1px solid var(--line); scroll-margin-top:60px; }
   .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
   .section-num{ font-family:'IBM Plex Mono', monospace; color:var(--ink-faint); font-size:13px; }
   .section-head h2{ font-size:26px; }
@@ -102,7 +102,7 @@
   .about-body{ max-width:64ch; font-size:16px; }
   .about-body strong{ color:var(--ink); font-weight:500; }
 
-  /* timeline (education) */
+  /* timeline */
   .timeline{ display:flex; flex-direction:column; gap:0; }
   .tl-item{
     display:grid; grid-template-columns:150px 1fr; gap:24px;
@@ -133,7 +133,7 @@
   .card p{ font-size:14px; flex-grow:1; }
   .card .card-date{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-faint); margin-top:14px; }
 
-  /* achievements — ranked list */
+  /* achievements */
   .ranklist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
   .rank-row{
     display:grid; grid-template-columns:56px 1fr auto; align-items:center;
@@ -148,7 +148,7 @@
   .rank-name{ font-size:14.5px; color:var(--ink); }
   .rank-year{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-faint); }
 
-  /* two-column info (skills/langs) */
+  /* skills / languages */
   .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
   .info-block h3{ font-size:14px; color:var(--ink-dim); font-family:'IBM Plex Mono', monospace; font-weight:400; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px; }
   .pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
@@ -160,12 +160,12 @@
   .lang-row:last-child{ border-bottom:none; }
   .lang-level{ font-family:'IBM Plex Mono', monospace; color:var(--ink-faint); font-size:12.5px; }
 
-  footer{ padding:56px 0 80px; text-align:center; }
+  footer{ padding:56px 0 80px; text-align:center; border-top:1px solid var(--line); scroll-margin-top:60px; }
   footer h2{ font-size:28px; margin-bottom:14px; }
   footer p{ margin-bottom:26px; }
   .foot-note{ font-size:12px; color:var(--ink-faint); margin-top:50px; }
 
-  @media (max-width:820px){
+  @media (max-width:900px){
     .hero-grid{ grid-template-columns:1fr; }
     .graph-wrap{ height:220px; order:-1; }
     .hero h1{ font-size:38px; }
@@ -174,7 +174,7 @@
     .nav-links{
       position:absolute; top:60px; left:0; right:0; background:var(--bg);
       flex-direction:column; padding:16px 28px; border-bottom:1px solid var(--line);
-      display:none;
+      display:none; gap:14px;
     }
     .nav-links.open{ display:flex; }
     .nav-toggle{ display:inline-block; }
@@ -186,26 +186,28 @@
 
 <header>
   <nav class="wrap">
-    <span class="nav-name">Lilla Petrányi</span>
+    <a class="nav-name" href="#top">Lilla Petrányi</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#achievements">Awards</a></li>
       <li><a href="#camps">Camps</a></li>
+      <li><a href="#volunteering">Volunteering</a></li>
+      <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">Menu</button>
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
       <img src="kep.jpg" alt="Lilla Petrányi" style="width:88px;height:88px;border-radius:50%;object-fit:cover;margin-bottom:20px;border:1px solid var(--line-strong);">
       <span class="eyebrow">BSc Mathematics · University of Warwick</span>
-      <h1>Mathematics, <em>solved</em><br>one problem at a time.</h1>
-      <p class="lede">I'm a second-year mathematics student at Warwick, with a soft spot for graph theory, competition mathematics, and programming.</p>
+      <h1>Lilla <em>Petrányi</em></h1>
+      <p class="lede">Second-year mathematics student at the University of Warwick, with interests in graph theory, competition mathematics, and programming.</p>
       <div class="hero-links">
         <a class="btn primary" href="mailto:petranyi.lilla13@gmail.com">Get in touch</a>
         <a class="btn" href="#projects">See my projects</a>
@@ -404,7 +406,7 @@
 
 <section id="skills">
   <div class="wrap">
-    <div class="section-head"><span class="section-num mono">06</span><h2>Skills &amp; languages</h2></div>
+    <div class="section-head"><span class="section-num mono">07</span><h2>Skills &amp; languages</h2></div>
     <div class="info-grid">
       <div class="info-block">
         <h3>Programming</h3>
@@ -429,8 +431,8 @@
 
 <footer id="contact">
   <div class="wrap">
-    <h2>Let's talk mathematics.</h2>
-    <p>Open to internships, collaborations, and interesting problems.</p>
+    <h2>Contact</h2>
+    <p>Open to internships, collaborations, and research opportunities.</p>
     <a class="btn primary" href="mailto:petranyi.lilla13@gmail.com">petranyi.lilla13@gmail.com</a>
     <p class="foot-note">Lilla Petrányi — BSc Mathematics, University of Warwick</p>
   </div>
